@@ -7,7 +7,7 @@ const Products = new productsManager();
 
 router.get('/', async (req, res)=>{
     let productList = await Products.consultarProductos();
-    return res.send({productList});
+    res.render('index', {productList})
 });
 
 router.get('/:pid', async (req, res) => {
