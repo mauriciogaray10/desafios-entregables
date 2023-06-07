@@ -1,0 +1,23 @@
+<div>
+    <h1>
+       {{this.user.name}} {{this.user.last_name}}!
+    </h1>
+
+    {{#if isAdmin}}
+        {{#each food}}
+            <div>
+                <p>
+                    {{this.name}}
+                </p>
+                <p>
+                    {{this.price}}
+                </p>
+            </div>
+        {{/each}}
+    {{else}}
+        <p>No tienes permiso para ver la listas de elementos</p>
+    {{/if}}
+    
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
