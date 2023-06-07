@@ -4,6 +4,7 @@ import routerCarts from './routes/cart.router.js';
 import __dirname from './utils.js';
 import {Server} from 'socket.io';
 import handlebars from 'express-handlebars';
+import routerRealTime from './routes/realTime.router.js'
 
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use('/products/', routerProducts);
 app.use('/carts/', routerCarts);
+app.use('/realTimeProducts', routerRealTime)
 
 
 
