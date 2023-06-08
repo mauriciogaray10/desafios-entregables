@@ -7,6 +7,8 @@ import handlebars from 'express-handlebars';
 import routerRealTime from './routes/realTime.router.js'
 
 
+
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -29,19 +31,26 @@ app.use('/realTimeProducts', routerRealTime)
 
 let lista = [];
 
+
 socketServer.on("connection", (socket) => {
     console.log("connected " + socket.id);
 
-    socket.on('productAdd', (product)=>{
-        lista.push(product).value;
-    });
-    socket.emit('list', lista);
-    socket.on('productDelete', (product)=>{
-        let productFiltered = lista.find(producto => producto.name !== product.name);
-        lista = productFiltered;
-    })
-    socket.emit('list', lista);
-    
+   socket.on('addProduct', (data)=> {
+    console.log(data);
+    lista.push(data);
+    socket.emit('lista', lista)
+   });
+   
+   
+   socket.on('deleteProduct', (data)=> {
+    const dataFiltered = lista.filter(elem => elem != data);
+    console.log(dataFiltered);
+    socket.emit('lista', lista)
+
+   })
+   
+   
+   
 
 });
 
