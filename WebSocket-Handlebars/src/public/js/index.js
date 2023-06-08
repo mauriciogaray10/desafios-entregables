@@ -1,26 +1,25 @@
 const socket = io();
-const idAdd = document.getElementById('idAdd');
-const idDelete = document.getElementById('idDelete');
-const lista = document.getElementById('lista');
+const nameAdd = document.getElementById('nameAdd');
+const nameDelete = document.getElementById('nameDelete');
+const productList = document.getElementById('productList');
+const agregar = document.getElementById('agregar');
+const eliminar = document.getElementById('eliminar')
 
-idAdd.addEventListener("keyup", (evt) => {
-    if (evt.key === "Enter") {
-      socket.emit("productAdd", { id: idAdd.value });
-      idAdd.value == "";
-    }
-  });
-  idDelete.addEventListener("keyup", (evt) => {
-    if (evt.key === "Backspace") {
-      socket.emit("productDelete", { id: idDelete.value });
-      idDelete.value == "";
-    }
-  });
+agregar.addEventListener('click', (nameAdd) =>{
+  socket.emit("productAdd", {name: nameAdd.value});
+  nameAdd === "";
+})
 
-  socket.on("show", (data) => {
-    let itemLists = "";
-    data.forEach((item) => {
-      itemLists += `${item.id} <br/>`;
-    });
-    lista.innerHTML = itemLists;
+eliminar.addEventListener('click', (nameDelete)=>{
+  socket.emit("productDelete",{name: nameDelete.value});
+  nameDelete == "";
+})
+
+socket.on('list', (lista)=>{
+  let productos = '';
+  lista.forEach(item => {
+    productos += item;
   });
+  productList.innerHTML = productos;
+})
 
