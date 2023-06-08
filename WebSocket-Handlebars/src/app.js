@@ -27,18 +27,21 @@ app.use('/products/', routerProducts);
 app.use('/carts/', routerCarts);
 app.use('/realTimeProducts', routerRealTime)
 
-
-
-
-
-
-
-
-
-
-
+let lista = [];
 
 socketServer.on("connection", (socket) => {
     console.log("connected " + socket.id);
+
+    socket.on('productAdd', (product)=>{
+        lista.push(product).value;
+    });
+    socket.emit('list', lista);
+    socket.on('productDelete', (product)=>{
+        let productFiltered = lista.find(producto => producto.name !== product.name);
+        lista = productFiltered;
+    })
+    socket.emit('list', lista);
+    
+
 });
 
