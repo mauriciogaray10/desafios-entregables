@@ -32,25 +32,24 @@ app.use('/realTimeProducts', routerRealTime)
 let lista = [];
 
 
+
 socketServer.on("connection", (socket) => {
     console.log("connected " + socket.id);
 
    socket.on('addProduct', (data)=> {
     console.log(data);
     lista.push(data);
-    socket.emit('lista', lista)
+    console.log(lista);
    });
-   
    
    socket.on('deleteProduct', (data)=> {
     const dataFiltered = lista.filter(elem => elem != data);
     console.log(dataFiltered);
-    socket.emit('lista', lista)
-
+    lista = dataFiltered;
    })
-   
-   
-   
+
+   socket.emit('lista', lista)
+ 
 
 });
 
